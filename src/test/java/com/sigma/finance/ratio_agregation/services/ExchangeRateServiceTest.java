@@ -2,7 +2,9 @@ package com.sigma.finance.ratio_agregation.services;
 
 import com.sigma.finance.ratio_agregation.entities.BankName;
 import com.sigma.finance.ratio_agregation.entities.ExchangeRate;
+import com.sigma.finance.ratio_agregation.entities.SortingOrder;
 import com.sigma.finance.ratio_agregation.entities.dto.BankExchangeRateDto;
+import com.sigma.finance.ratio_agregation.entities.dto.ExchangeRateDto;
 import com.sigma.finance.ratio_agregation.repository.ExchangeRateRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,56 +38,69 @@ public class ExchangeRateServiceTest {
     private static final ExchangeRate EXCHANGE_RATE_MONOLITH_TWO
             = new ExchangeRate("EUR", "28.05", "30.1");
 
-    private static final List<ExchangeRate> FULL_RATE_EXCHANGE_APOSTOL_LIST = Arrays.asList(
+    private static final List<ExchangeRate> RATE_EXCHANGE_APOSTOL_LIST = Arrays.asList(
             EXCHANGE_RATE_APOSTOL_ONE,
             EXCHANGE_RATE_APOSTOL_TWO,
             EXCHANGE_RATE_APOSTOL_THREE
     );
 
-    private static final List<ExchangeRate> FULL_RATE_EXCHANGE_MONOLITH_LIST = Arrays.asList(
+    private static final List<ExchangeRate> RATE_EXCHANGE_MONOLITH_LIST = Arrays.asList(
             EXCHANGE_RATE_MONOLITH_ONE,
             EXCHANGE_RATE_MONOLITH_TWO
     );
 
-    private static final BankExchangeRateDto EXCHANGE_RATE_DTO_APOSTOL_ONE
+    private static final BankExchangeRateDto BANK_EXCHANGE_RATE_DTO_APOSTOL_ONE
             = new BankExchangeRateDto(BankName.APOSTLE, EXCHANGE_RATE_APOSTOL_ONE);
-    private static final BankExchangeRateDto EXCHANGE_RATE_DTO_APOSTOL_TWO
+    private static final BankExchangeRateDto BANK_EXCHANGE_RATE_DTO_APOSTOL_TWO
             = new BankExchangeRateDto(BankName.APOSTLE, EXCHANGE_RATE_APOSTOL_TWO);
-    private static final BankExchangeRateDto EXCHANGE_RATE_DTO_APOSTOL_THREE
+    private static final BankExchangeRateDto BANK_EXCHANGE_RATE_DTO_APOSTOL_THREE
             = new BankExchangeRateDto(BankName.APOSTLE, EXCHANGE_RATE_APOSTOL_THREE);
-    private static final BankExchangeRateDto EXCHANGE_RATE_DTO_MONOLITH_ONE
+    private static final BankExchangeRateDto BANK_EXCHANGE_RATE_DTO_MONOLITH_ONE
             = new BankExchangeRateDto(BankName.MONOLITH, EXCHANGE_RATE_MONOLITH_ONE);
-    private static final BankExchangeRateDto EXCHANGE_RATE_DTO_MONOLITH_TWO
+    private static final BankExchangeRateDto BANK_EXCHANGE_RATE_DTO_MONOLITH_TWO
             = new BankExchangeRateDto(BankName.MONOLITH, EXCHANGE_RATE_MONOLITH_TWO);
 
-    private static final List<BankExchangeRateDto> FULL_RATE_EXCHANGE_DTO_APOSTOL_LIST = Arrays.asList(
-            EXCHANGE_RATE_DTO_APOSTOL_ONE,
-            EXCHANGE_RATE_DTO_APOSTOL_TWO,
-            EXCHANGE_RATE_DTO_APOSTOL_THREE
+    private static final List<BankExchangeRateDto> BANK_EXCHANGE_RATE_DTO_APOSTLE_LIST = Arrays.asList(
+            BANK_EXCHANGE_RATE_DTO_APOSTOL_ONE,
+            BANK_EXCHANGE_RATE_DTO_APOSTOL_TWO,
+            BANK_EXCHANGE_RATE_DTO_APOSTOL_THREE
     );
 
-    private static final List<BankExchangeRateDto> FULL_RATE_EXCHANGE_DTO_MONOLITH_LIST = Arrays.asList(
-            EXCHANGE_RATE_DTO_MONOLITH_ONE,
-            EXCHANGE_RATE_DTO_MONOLITH_TWO
+    private static final List<BankExchangeRateDto> BANK_EXCHANGE_RATE_DTO_MONOLITH_LIST = Arrays.asList(
+            BANK_EXCHANGE_RATE_DTO_MONOLITH_ONE,
+            BANK_EXCHANGE_RATE_DTO_MONOLITH_TWO
     );
 
-    private static final List<BankExchangeRateDto> FULL_RATE_EXCHANGE_DTO_LIST = Arrays.asList(
-            EXCHANGE_RATE_DTO_APOSTOL_ONE,
-            EXCHANGE_RATE_DTO_APOSTOL_TWO,
-            EXCHANGE_RATE_DTO_APOSTOL_THREE,
-            EXCHANGE_RATE_DTO_MONOLITH_ONE,
-            EXCHANGE_RATE_DTO_MONOLITH_TWO
+    private static final List<BankExchangeRateDto> BANK_EXCHANGE_RATE_DTO_LIST = Arrays.asList(
+            BANK_EXCHANGE_RATE_DTO_APOSTOL_ONE,
+            BANK_EXCHANGE_RATE_DTO_APOSTOL_TWO,
+            BANK_EXCHANGE_RATE_DTO_APOSTOL_THREE,
+            BANK_EXCHANGE_RATE_DTO_MONOLITH_ONE,
+            BANK_EXCHANGE_RATE_DTO_MONOLITH_TWO
+    );
+
+    private static final List<ExchangeRateDto> BUY_EXCHANGE_RATE_DTO_USD = Arrays.asList(
+            new ExchangeRateDto(
+                    BANK_EXCHANGE_RATE_DTO_APOSTOL_ONE.getBankName(),
+                    BANK_EXCHANGE_RATE_DTO_APOSTOL_ONE.getExchangeRate().getCode(),
+                    BANK_EXCHANGE_RATE_DTO_APOSTOL_ONE.getExchangeRate().getBuy()
+            ),
+            new ExchangeRateDto(
+                    BANK_EXCHANGE_RATE_DTO_MONOLITH_ONE.getBankName(),
+                    BANK_EXCHANGE_RATE_DTO_MONOLITH_ONE.getExchangeRate().getCode(),
+                    BANK_EXCHANGE_RATE_DTO_MONOLITH_ONE.getExchangeRate().getBuy()
+            )
     );
 
     @Test
-    public void testGetExchangeRatesByBankNameEqualsApostol() {
+    public void testGetExchangeRateByBankNameEqualsApostle() {
         String bankName = BankName.APOSTLE.toString();
 
         Mockito.when(rateRepository.readExchangeRatesByBankName(eq(bankName)))
-                .thenReturn(FULL_RATE_EXCHANGE_APOSTOL_LIST);
+                .thenReturn(RATE_EXCHANGE_APOSTOL_LIST);
 
-        assertEquals(FULL_RATE_EXCHANGE_DTO_APOSTOL_LIST.size(), rateRepository.readExchangeRatesByBankName(bankName).size());
-        assertEquals(FULL_RATE_EXCHANGE_DTO_APOSTOL_LIST, rateService.getExchangeRatesByBankName(bankName));
+        assertEquals(BANK_EXCHANGE_RATE_DTO_APOSTLE_LIST.size(), rateRepository.readExchangeRatesByBankName(bankName).size());
+        assertEquals(BANK_EXCHANGE_RATE_DTO_APOSTLE_LIST, rateService.getExchangeRatesByBankName(bankName));
     }
 
     @Test
@@ -93,23 +108,38 @@ public class ExchangeRateServiceTest {
         String bankName = BankName.MONOLITH.toString();
 
         Mockito.when(rateRepository.readExchangeRatesByBankName(eq(bankName)))
-                .thenReturn(FULL_RATE_EXCHANGE_MONOLITH_LIST);
+                .thenReturn(RATE_EXCHANGE_MONOLITH_LIST);
 
-        assertEquals(FULL_RATE_EXCHANGE_DTO_MONOLITH_LIST.size(), rateRepository.readExchangeRatesByBankName(bankName).size());
-        assertEquals(FULL_RATE_EXCHANGE_DTO_MONOLITH_LIST, rateService.getExchangeRatesByBankName(bankName));
+        assertEquals(BANK_EXCHANGE_RATE_DTO_MONOLITH_LIST.size(), rateRepository.readExchangeRatesByBankName(bankName).size());
+        assertEquals(BANK_EXCHANGE_RATE_DTO_MONOLITH_LIST, rateService.getExchangeRatesByBankName(bankName));
     }
 
     @Test
     public void testGetAllExchangeRates() {
         Mockito.when(rateRepository.readExchangeRatesByBankName(eq(BankName.APOSTLE.toString())))
-                .thenReturn(FULL_RATE_EXCHANGE_APOSTOL_LIST);
+                .thenReturn(RATE_EXCHANGE_APOSTOL_LIST);
         Mockito.when(rateRepository.readExchangeRatesByBankName(eq(BankName.MONOLITH.toString())))
-                .thenReturn(FULL_RATE_EXCHANGE_MONOLITH_LIST);
+                .thenReturn(RATE_EXCHANGE_MONOLITH_LIST);
 
-        assertEquals(FULL_RATE_EXCHANGE_APOSTOL_LIST.size(), rateRepository.readExchangeRatesByBankName(BankName.APOSTLE.toString()).size());
-        assertEquals(FULL_RATE_EXCHANGE_MONOLITH_LIST.size(), rateRepository.readExchangeRatesByBankName(BankName.MONOLITH.toString()).size());
+        assertEquals(RATE_EXCHANGE_APOSTOL_LIST.size(), rateRepository
+                .readExchangeRatesByBankName(BankName.APOSTLE.toString()).size());
+        assertEquals(RATE_EXCHANGE_MONOLITH_LIST.size(), rateRepository
+                .readExchangeRatesByBankName(BankName.MONOLITH.toString()).size());
 
-        assertEquals(FULL_RATE_EXCHANGE_DTO_LIST.size(), rateService.getAllExchangeRates().size());
-        assertEquals(FULL_RATE_EXCHANGE_DTO_LIST, rateService.getAllExchangeRates());
+        assertEquals(BANK_EXCHANGE_RATE_DTO_LIST.size(), rateService.getAllExchangeRates().size());
+        assertEquals(BANK_EXCHANGE_RATE_DTO_LIST, rateService.getAllExchangeRates());
+    }
+
+    @Test
+    public void testGetBuyExchangeRatesFilteredByCurrencyCode() {
+        Mockito.when(rateRepository.readExchangeRatesByBankName(eq(BankName.APOSTLE.toString())))
+                .thenReturn(RATE_EXCHANGE_APOSTOL_LIST);
+        Mockito.when(rateRepository.readExchangeRatesByBankName(eq(BankName.MONOLITH.toString())))
+                .thenReturn(RATE_EXCHANGE_MONOLITH_LIST);
+
+        assertEquals(BUY_EXCHANGE_RATE_DTO_USD.size(), rateService
+                .getBuyExchangeRatesFilteredByCurrencyCode("USD", SortingOrder.ASCENDING.toString()).size());
+        assertEquals(BUY_EXCHANGE_RATE_DTO_USD, rateService
+                .getBuyExchangeRatesFilteredByCurrencyCode("USD", SortingOrder.ASCENDING.toString()));
     }
 }
