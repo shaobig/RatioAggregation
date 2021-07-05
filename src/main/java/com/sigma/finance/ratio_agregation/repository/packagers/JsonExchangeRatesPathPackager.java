@@ -1,6 +1,6 @@
-package com.sigma.finance.ratio_agregation.factories.path;
+package com.sigma.finance.ratio_agregation.repository.packagers;
 
-public class JsonExchangeRatesPathFactory implements ExchangeRatesPathFactory {
+public class JsonExchangeRatesPathPackager implements ExchangeRatesPathPackager {
 
     private static final String ROOT_PATH = "src\\main\\resources\\static";
 
@@ -13,6 +13,11 @@ public class JsonExchangeRatesPathFactory implements ExchangeRatesPathFactory {
             throw new IllegalArgumentException("The proposed name is empty");
         }
 
-        return ROOT_PATH.concat("\\").concat(bankName.toLowerCase()).concat(".json");
+        return ROOT_PATH.concat("\\").concat(bankName.toLowerCase()).concat(getFileFormat());
+    }
+
+    @Override
+    public String getFileFormat() {
+        return ".json";
     }
 }
