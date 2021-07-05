@@ -2,7 +2,7 @@ package com.sigma.finance.ratio_agregation.services;
 
 import com.sigma.finance.ratio_agregation.entities.BankName;
 import com.sigma.finance.ratio_agregation.entities.ExchangeRate;
-import com.sigma.finance.ratio_agregation.entities.dto.ExchangeRateDto;
+import com.sigma.finance.ratio_agregation.entities.dto.BankExchangeRateDto;
 import com.sigma.finance.ratio_agregation.repository.ExchangeRateRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,29 +47,29 @@ public class ExchangeRateServiceTest {
             EXCHANGE_RATE_MONOLITH_TWO
     );
 
-    private static final ExchangeRateDto EXCHANGE_RATE_DTO_APOSTOL_ONE
-            = new ExchangeRateDto(BankName.APOSTLE, EXCHANGE_RATE_APOSTOL_ONE);
-    private static final ExchangeRateDto EXCHANGE_RATE_DTO_APOSTOL_TWO
-            = new ExchangeRateDto(BankName.APOSTLE, EXCHANGE_RATE_APOSTOL_TWO);
-    private static final ExchangeRateDto EXCHANGE_RATE_DTO_APOSTOL_THREE
-            = new ExchangeRateDto(BankName.APOSTLE, EXCHANGE_RATE_APOSTOL_THREE);
-    private static final ExchangeRateDto EXCHANGE_RATE_DTO_MONOLITH_ONE
-            = new ExchangeRateDto(BankName.MONOLITH, EXCHANGE_RATE_MONOLITH_ONE);
-    private static final ExchangeRateDto EXCHANGE_RATE_DTO_MONOLITH_TWO
-            = new ExchangeRateDto(BankName.MONOLITH, EXCHANGE_RATE_MONOLITH_TWO);
+    private static final BankExchangeRateDto EXCHANGE_RATE_DTO_APOSTOL_ONE
+            = new BankExchangeRateDto(BankName.APOSTLE, EXCHANGE_RATE_APOSTOL_ONE);
+    private static final BankExchangeRateDto EXCHANGE_RATE_DTO_APOSTOL_TWO
+            = new BankExchangeRateDto(BankName.APOSTLE, EXCHANGE_RATE_APOSTOL_TWO);
+    private static final BankExchangeRateDto EXCHANGE_RATE_DTO_APOSTOL_THREE
+            = new BankExchangeRateDto(BankName.APOSTLE, EXCHANGE_RATE_APOSTOL_THREE);
+    private static final BankExchangeRateDto EXCHANGE_RATE_DTO_MONOLITH_ONE
+            = new BankExchangeRateDto(BankName.MONOLITH, EXCHANGE_RATE_MONOLITH_ONE);
+    private static final BankExchangeRateDto EXCHANGE_RATE_DTO_MONOLITH_TWO
+            = new BankExchangeRateDto(BankName.MONOLITH, EXCHANGE_RATE_MONOLITH_TWO);
 
-    private static final List<ExchangeRateDto> FULL_RATE_EXCHANGE_DTO_APOSTOL_LIST = Arrays.asList(
+    private static final List<BankExchangeRateDto> FULL_RATE_EXCHANGE_DTO_APOSTOL_LIST = Arrays.asList(
             EXCHANGE_RATE_DTO_APOSTOL_ONE,
             EXCHANGE_RATE_DTO_APOSTOL_TWO,
             EXCHANGE_RATE_DTO_APOSTOL_THREE
     );
 
-    private static final List<ExchangeRateDto> FULL_RATE_EXCHANGE_DTO_MONOLITH_LIST = Arrays.asList(
+    private static final List<BankExchangeRateDto> FULL_RATE_EXCHANGE_DTO_MONOLITH_LIST = Arrays.asList(
             EXCHANGE_RATE_DTO_MONOLITH_ONE,
             EXCHANGE_RATE_DTO_MONOLITH_TWO
     );
 
-    private static final List<ExchangeRateDto> FULL_RATE_EXCHANGE_DTO_LIST = Arrays.asList(
+    private static final List<BankExchangeRateDto> FULL_RATE_EXCHANGE_DTO_LIST = Arrays.asList(
             EXCHANGE_RATE_DTO_APOSTOL_ONE,
             EXCHANGE_RATE_DTO_APOSTOL_TWO,
             EXCHANGE_RATE_DTO_APOSTOL_THREE,

@@ -8,38 +8,38 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ExchangeRateDtoTest {
+public class BankExchangeRateDtoTest {
 
-    private static ExchangeRateDto exchangeRateDto;
+    private static BankExchangeRateDto bankExchangeRateDto;
 
     @BeforeAll
     public static void setUp() {
-        exchangeRateDto = new ExchangeRateDto(BankName.APOSTLE, new ExchangeRate("POL", "7.15", "7.41"));
+        bankExchangeRateDto = new BankExchangeRateDto(BankName.APOSTLE, new ExchangeRate("POL", "7.15", "7.41"));
     }
 
     @Test
     public void setBankNameEqualsNull() {
-        assertThrows(NullPointerException.class, () -> exchangeRateDto.setBankName(null));
+        assertThrows(NullPointerException.class, () -> bankExchangeRateDto.setBankName(null));
     }
 
     @Test
     public void setBankName() {
         BankName bankName = BankName.MONOLITH;
-        exchangeRateDto.setBankName(bankName);
+        bankExchangeRateDto.setBankName(bankName);
 
-        assertEquals(bankName, exchangeRateDto.getBankName());
+        assertEquals(bankName, bankExchangeRateDto.getBankName());
     }
 
     @Test
     public void setExchangeRateEqualsNull() {
-        assertThrows(NullPointerException.class, () -> exchangeRateDto.setExchangeRate(null));
+        assertThrows(NullPointerException.class, () -> bankExchangeRateDto.setExchangeRate(null));
     }
 
     @Test
     public void setExchangeRate() {
         ExchangeRate rate = new ExchangeRate("PLN", "7.05", "7.35");
-        exchangeRateDto.setExchangeRate(rate);
+        bankExchangeRateDto.setExchangeRate(rate);
 
-        assertEquals(rate, exchangeRateDto.getExchangeRate());
+        assertEquals(rate, bankExchangeRateDto.getExchangeRate());
     }
 }

@@ -1,23 +1,19 @@
 package com.sigma.finance.ratio_agregation.entities.dto;
 
 import com.sigma.finance.ratio_agregation.entities.BankName;
-import com.sigma.finance.ratio_agregation.entities.ExchangeRate;
 
-import java.util.Objects;
+import java.math.BigDecimal;
 
 public class ExchangeRateDto {
 
     private BankName bankName;
-    private ExchangeRate exchangeRate;
+    private String code;
+    private BigDecimal price;
 
-    public ExchangeRateDto(String bankName, ExchangeRate exchangeRate) {
-        this.bankName = BankName.valueOf(bankName.toUpperCase());
-        this.exchangeRate = exchangeRate;
-    }
-
-    public ExchangeRateDto(BankName bankName, ExchangeRate exchangeRate) {
+    public ExchangeRateDto(BankName bankName, String code, BigDecimal price) {
         this.bankName = bankName;
-        this.exchangeRate = exchangeRate;
+        this.code = code;
+        this.price = price;
     }
 
     public BankName getBankName() {
@@ -25,44 +21,22 @@ public class ExchangeRateDto {
     }
 
     public void setBankName(BankName bankName) {
-        if (bankName == null) {
-            throw new NullPointerException("The bank name has no reference to an object");
-        }
-
         this.bankName = bankName;
     }
 
-    public ExchangeRate getExchangeRate() {
-        return exchangeRate;
+    public String getCode() {
+        return code;
     }
 
-    public void setExchangeRate(ExchangeRate exchangeRate) {
-        if (exchangeRate == null) {
-            throw new NullPointerException("The exchange rate for the bank has no reference to an object");
-        }
-
-        this.exchangeRate = exchangeRate;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ExchangeRateDto that = (ExchangeRateDto) o;
-        return bankName == that.bankName &&
-                exchangeRate.equals(that.exchangeRate);
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(bankName, exchangeRate);
-    }
-
-    @Override
-    public String toString() {
-        return "ExchangeRateDto{" +
-                "bankName=" + bankName +
-                ", exchangeRate=" + exchangeRate +
-                '}';
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }

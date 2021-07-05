@@ -3,7 +3,7 @@ package com.sigma.finance.ratio_agregation.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sigma.finance.ratio_agregation.entities.BankName;
 import com.sigma.finance.ratio_agregation.entities.ExchangeRate;
-import com.sigma.finance.ratio_agregation.repository.packagers.JsonExchangeRatesPathPackager;
+import com.sigma.finance.ratio_agregation.repository.packagers.JsonExchangeRatePathPackager;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileInputStream;
@@ -30,7 +30,7 @@ public class ExchangeRateRepository {
         List<ExchangeRate> rates = new ArrayList<>();
 
         try {
-            String path = new JsonExchangeRatesPathPackager().getExchangeRatesPath(bankName);
+            String path = new JsonExchangeRatePathPackager().getExchangeRatePath(bankName);
             rates = Arrays.asList(mapper.readValue(new FileInputStream(path), ExchangeRate[].class));
         }
         catch (IOException e) {
