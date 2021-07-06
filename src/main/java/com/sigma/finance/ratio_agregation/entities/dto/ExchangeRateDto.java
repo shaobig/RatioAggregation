@@ -11,6 +11,11 @@ public class ExchangeRateDto {
     private String code;
     private BigDecimal price;
 
+    public ExchangeRateDto(String code, BigDecimal price) {
+        this.code = code;
+        this.price = price;
+    }
+
     public ExchangeRateDto(BankName bankName, String code, BigDecimal price) {
         this.bankName = bankName;
         this.code = code;

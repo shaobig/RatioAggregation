@@ -28,6 +28,15 @@ public class ExchangeRateController {
         return exchangeRateService.getExchangeRatesByBankName(bankName);
     }
 
+    @PostMapping("/rates/bank/{bankName}")
+    public BankExchangeRateDto createExchangeRate(
+            @PathVariable(value = "bankName") String bankName,
+            @RequestBody ExchangeRate exchangeRate
+    ) {
+
+        return exchangeRateService.createExchangeRate(bankName, exchangeRate);
+    }
+
     @PutMapping("/rates/bank/{bankName}")
     public BankExchangeRateDto updateExchangeRatesByBankName(
             @PathVariable(value = "bankName") String bankName,

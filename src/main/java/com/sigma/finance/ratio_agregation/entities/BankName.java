@@ -1,5 +1,5 @@
 package com.sigma.finance.ratio_agregation.entities;
 
 public enum BankName {
-    APOSTLE, MONOLITH
+    APOSTLE, MONOLITH, NORDBANK, SCIENTIFIC_BANK
 }

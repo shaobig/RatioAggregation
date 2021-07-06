@@ -47,9 +47,6 @@ public class ExchangeRate {
     }
 
     public void setBuy(BigDecimal buy) {
-        if (buy == null) {
-            throw new NullPointerException("The buy price value has no reference to an object");
-        }
         if (buy.intValue() < 0) {
             throw new IllegalArgumentException("The buy price value should be a positive number");
         }
@@ -66,9 +63,6 @@ public class ExchangeRate {
     }
 
     public void setSell(BigDecimal sell) {
-        if (sell == null) {
-            throw new NullPointerException("The sell price value has no reference to an object");
-        }
         if (sell.intValue() < 0) {
             throw new IllegalArgumentException("The sell price value should be a positive number");
         }

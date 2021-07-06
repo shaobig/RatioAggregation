@@ -8,6 +8,8 @@ public class ExchangeRateDtoDescendingComparator implements Comparator<ExchangeR
 
     @Override
     public int compare(ExchangeRateDto rateOne, ExchangeRateDto rateTwo) {
-        return rateTwo.getPrice().compareTo(rateOne.getPrice());
+        return rateOne != null && rateTwo != null
+                ? rateTwo.getPrice().compareTo(rateOne.getPrice())
+                : 0;
     }
 }
