@@ -65,4 +65,16 @@ public class ExchangeRateService {
                 .sorted(comparator)
                 .collect(Collectors.toList());
     }
+
+    public BankExchangeRateDto updateExchangeRate(String bankName, ExchangeRate exchangeRate) {
+        exchangeRateRepository.updateExchangeRate(bankName, exchangeRate);
+        return new BankExchangeRateDto(bankName, exchangeRate);
+    }
+
+    public List<BankExchangeRateDto> deleteExchangeRate(String bankName) {
+        List<BankExchangeRateDto> deletedRates = getExchangeRatesByBankName(bankName);
+        exchangeRateRepository.deleteExchangeRates(bankName);
+
+        return deletedRates;
+    }
 }
