@@ -6,12 +6,12 @@ import com.sigma.finance.ratio_agregation.entities.ExchangeRate;
 import com.sigma.finance.ratio_agregation.entities.SortingOrder;
 import com.sigma.finance.ratio_agregation.entities.dto.BankExchangeRateDto;
 import com.sigma.finance.ratio_agregation.entities.dto.ExchangeRateDto;
+import com.sigma.finance.ratio_agregation.entities.dto.ReportExchangeRateDto;
 import com.sigma.finance.ratio_agregation.repository.ExchangeRateRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class ExchangeRateServiceTest {
     private static final ExchangeRate EXCHANGE_RATE_APOSTLE_THREE
             = new ExchangeRate("JPY", "0.25", "0.45");
     private static final ExchangeRate EXCHANGE_RATE_MONOLITH_ONE
-            = new ExchangeRate("USD", "27.5", "29.5");
+            = new ExchangeRate("USD", "26.5", "27.05");
     private static final ExchangeRate EXCHANGE_RATE_MONOLITH_TWO
             = new ExchangeRate("EUR", "28.05", "30.1");
     private static final ExchangeRate EXCHANGE_RATE_NORDBANK_ONE
@@ -124,14 +124,54 @@ public class ExchangeRateServiceTest {
 
     private static final List<ExchangeRateDto> SELL_EXCHANGE_RATE_DTO_USD = Arrays.asList(
             new ExchangeRateDto(
-                    BANK_EXCHANGE_RATE_DTO_APOSTLE_ONE.getBankName(),
-                    BANK_EXCHANGE_RATE_DTO_APOSTLE_ONE.getExchangeRate().getCode(),
-                    BANK_EXCHANGE_RATE_DTO_APOSTLE_ONE.getExchangeRate().getSell()
-            ),
-            new ExchangeRateDto(
                     BANK_EXCHANGE_RATE_DTO_MONOLITH_ONE.getBankName(),
                     BANK_EXCHANGE_RATE_DTO_MONOLITH_ONE.getExchangeRate().getCode(),
                     BANK_EXCHANGE_RATE_DTO_MONOLITH_ONE.getExchangeRate().getSell()
+            ),
+            new ExchangeRateDto(
+                    BANK_EXCHANGE_RATE_DTO_APOSTLE_ONE.getBankName(),
+                    BANK_EXCHANGE_RATE_DTO_APOSTLE_ONE.getExchangeRate().getCode(),
+                    BANK_EXCHANGE_RATE_DTO_APOSTLE_ONE.getExchangeRate().getSell()
+            )
+    );
+
+//    private static final List<String> CURRENCY_CODES = Arrays.asList("USD","EUR","JPY","SWE","GBP");
+
+    private static final List<ReportExchangeRateDto> REPORT_EXCHANGE_RATE_LIST = Arrays.asList(
+            new ReportExchangeRateDto(
+                    "USD",
+                    EXCHANGE_RATE_APOSTLE_ONE.getBuy(),
+                    BankName.APOSTLE,
+                    EXCHANGE_RATE_MONOLITH_ONE.getSell(),
+                    BankName.MONOLITH
+                    ),
+            new ReportExchangeRateDto(
+                    "EUR",
+                    EXCHANGE_RATE_APOSTLE_TWO.getBuy(),
+                    BankName.APOSTLE,
+                    EXCHANGE_RATE_APOSTLE_TWO.getSell(),
+                    BankName.APOSTLE
+            ),
+            new ReportExchangeRateDto(
+                    "JPY",
+                    EXCHANGE_RATE_APOSTLE_THREE.getBuy(),
+                    BankName.APOSTLE,
+                    EXCHANGE_RATE_APOSTLE_THREE.getSell(),
+                    BankName.APOSTLE
+            ),
+            new ReportExchangeRateDto(
+                    "SWE",
+                    EXCHANGE_RATE_NORDBANK_ONE.getBuy(),
+                    BankName.NORDBANK,
+                    EXCHANGE_RATE_NORDBANK_ONE.getSell(),
+                    BankName.NORDBANK
+            ),
+            new ReportExchangeRateDto(
+                    "GBP",
+                    EXCHANGE_RATE_SCIENTIFIC_BANK_TWO.getBuy(),
+                    BankName.SCIENTIFIC_BANK,
+                    EXCHANGE_RATE_SCIENTIFIC_BANK_TWO.getSell(),
+                    BankName.SCIENTIFIC_BANK
             )
     );
 
@@ -252,5 +292,20 @@ public class ExchangeRateServiceTest {
                 rateService.deleteExchangeRate(BankName.MONOLITH.toString()).size());
         assertEquals(BANK_EXCHANGE_RATE_DTO_MONOLITH_LIST,
                 rateService.deleteExchangeRate(BankName.MONOLITH.toString()));
+    }
+
+    @Test
+    public void testGetOptimumExchangeRatesReport() {
+        when(rateRepository.readExchangeRatesByBankName(eq(BankName.APOSTLE.toString())))
+                .thenReturn(EXCHANGE_RATE_APOSTLE_LIST);
+        when(rateRepository.readExchangeRatesByBankName(eq(BankName.MONOLITH.toString())))
+                .thenReturn(EXCHANGE_RATE_MONOLITH_LIST);
+        when(rateRepository.readExchangeRatesByBankName(eq(BankName.NORDBANK.toString())))
+                .thenReturn(EXCHANGE_RATE_NORDBANK_LIST);
+        when(rateRepository.readExchangeRatesByBankName(eq(BankName.SCIENTIFIC_BANK.toString())))
+                .thenReturn(EXCHANGE_RATE_SCIENTIFIC_BANK_LIST);
+
+        assertEquals(REPORT_EXCHANGE_RATE_LIST.size(), rateService.getOptimumExchangeRatesReport().size());
+        assertEquals(REPORT_EXCHANGE_RATE_LIST, rateService.getOptimumExchangeRatesReport());
     }
 }
