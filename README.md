@@ -1,4 +1,4 @@
-# RatioAgregation
+# RatioAggregation
 A web application for the exchange rates agregations
 
 There are four simulated banks - Apostle, Monolith, Nordbank, Scientific Bank. They have a great number of exchange rates with different input values.
